@@ -1,0 +1,21 @@
+{
+  "name": "smartes-server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "bin": {
+    "smartes": "./index.js"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "@mikabytes",
+  "license": "ISC",
+  "keywords": [
+    "es"
+  ],
+  "dependencies": {
+    "mocha": "^7.1.1",
+    "mime-types": "^2.1.26"
+  }
+}
