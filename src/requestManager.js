@@ -9,7 +9,7 @@ import transform from "./transform.js"
 let data
 
 try {
-  data = JSON.parse(fs.readFileSync(".smartes.cache"))
+  data = JSON.parse(fs.readFileSync(`.smartes.cache`))
 } catch (e) {
   data = {}
 }
@@ -20,7 +20,7 @@ const cache = {
   },
   set(rev, val) {
     data[rev] = val
-    fs.writeFileSync(".smartes.cache", JSON.stringify(data))
+    fs.writeFileSync(`.smartes.cache`, JSON.stringify(data))
   },
 }
 
@@ -34,7 +34,7 @@ export default function RequestManager(config) {
       } catch (e) {
         return [
           400,
-          { "Content-Type": "text/text" },
+          { "Content-Type": `text/text` },
           `Invalid branch/hash/tag "${treeish}"`,
         ]
       }
@@ -63,12 +63,12 @@ export default function RequestManager(config) {
 
       if (path === config.entry) {
         if (!schema[path]) {
-          ret = [404, {}, "No such file."]
+          ret = [404, {}, `No such file.`]
         } else {
           ret = await getFile(treeish, path, schema, snapshot)
         }
       } else if (pathNotInSchema(path, schema)) {
-        ret = [404, {}, "No such file.\n\n" + JSON.stringify(schema, null, 4)]
+        ret = [404, {}, `No such file.\n\n` + JSON.stringify(schema, null, 4)]
       } else {
         const [realpath, version] = versionedPathToReal(path)
         ret = await getFile(treeish, realpath, schema, snapshot)
@@ -119,7 +119,7 @@ async function getFile(treeish, path, schema, snapshot) {
 
   return [
     200,
-    { "Content-Type": mime.lookup(path), "Content-Encoding": "gzip" },
+    { "Content-Type": mime.lookup(path), "Content-Encoding": `gzip` },
     contents,
   ]
 }

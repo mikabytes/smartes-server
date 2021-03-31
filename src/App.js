@@ -14,8 +14,8 @@ export default function App(config) {
 
     handleRequest(req, res)
   })
-  server.on("clientError", (err, socket) => {
-    socket.end("HTTP/1.1 400 Bad Request\r\n\r\n")
+  server.on(`clientError`, (err, socket) => {
+    socket.end(`HTTP/1.1 400 Bad Request\r\n\r\n`)
   })
 
   const port = process.env.PORT || config.port || 3000
@@ -24,7 +24,7 @@ export default function App(config) {
   })
 
   function rewrite(req, res) {
-    const [pathname, search] = req.url.split("?")
+    const [pathname, search] = req.url.split(`?`)
     if (search) {
       res.writeHead(301, { Location: pathname })
       return true
@@ -37,34 +37,34 @@ export default function App(config) {
     }
 
     const start = pathname.slice(0, 5)
-    if (start !== "/HEAD" && start.toUpperCase() === "/HEAD") {
-      res.writeHead(301, { Location: "/HEAD" + pathname.slice(5) })
+    if (start !== `/HEAD` && start.toUpperCase() === `/HEAD`) {
+      res.writeHead(301, { Location: `/HEAD` + pathname.slice(5) })
       return true
     }
   }
 
   function invalid(req, res) {
-    const parts = req.url.split("/")
+    const parts = req.url.split(`/`)
 
     if (parts.length < 3) {
-      res.writeHead(404, { "Content-Type": "text/text" })
-      res.write("404 Not found.")
+      res.writeHead(404, { "Content-Type": `text/text` })
+      res.write(`404 Not found.`)
       return true
     }
   }
 
   async function handleRequest(req, res) {
-    const [_, treeish, ...rest] = req.url.split("/")
+    const [_, treeish, ...rest] = req.url.split(`/`)
 
     try {
       const [status, headers, body] = await requestManager.handle(
         treeish,
-        rest.join("/")
+        rest.join(`/`)
       )
       res.writeHead(status, headers)
       res.end(body)
     } catch (e) {
-      res.writeHead(500, { "Content-Type": "text/text" })
+      res.writeHead(500, { "Content-Type": `text/text` })
       console.error(e)
       res.end(e.stack)
     }
